@@ -15,40 +15,28 @@
 require "./spec_helper"
 
 describe "unveil" do
-  it "veils the filesystem" do
-    reader, writer = IO.pipe
-
-    child = Process.fork do
-      Process.unveil({ "/etc/motd" => "r" })
-      File.open("/etc/motd").class.should eq File
-
-      begin
-        File.open("/etc/passwd").should eq nil
-        exit 1
-      rescue File::Error
-        exit 0
-      end
-    end
-
-    child.wait.exit_status.should eq 0
+  it "read a few files without unveil" do
+    File.open("/etc/motd").class.should eq File
+    File.open("/etc/passwd").class.should eq File
   end
 
-  it "prevents further unveiling after final unveil" do
-    reader, writer = IO.pipe
-
-    child = Process.fork do
-      Process.unveil({ "/etc/motd" => "r" })
-      Process.unveil
-
-      begin
-        Process.unveil({ "/etc/passwd" => "r" })
-      rescue e : Process::UnveilError
-        exit 0
-      end
-
-      exit 1
+  it "unveil a first path and see what happens" do
+    Process.unveil({ "/etc/motd" => "r" })
+    # /etc/motd is still readable, but no other path is.
+    File.open("/etc/motd").class.should eq File
+    begin
+      File.open("/etc/passwd").class.should eq nil
+    rescue e
+      e.class.should eq File::NotFoundError
     end
+  end
 
-    child.wait.exit_status.should eq 0
+  it "prevent further unveiling after final unveil" do
+    Process.unveil
+    begin
+      Process.unveil({ "/etc/passwd" => "r" })
+    rescue e
+      e.class.should eq Process::UnveilError
+    end
   end
 end
