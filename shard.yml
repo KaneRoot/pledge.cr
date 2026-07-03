@@ -1,8 +1,10 @@
 name: pledge
-version: 0.1.0
+version: 0.2.0
 license: ISC
 
 crystal: 0.23.1
 
 authors:
   - Chris Huxtable <chris@huxtable.ca>
+  - Joshua Stein <jcs@jcs.org>
+  - Philippe Pittoli <karchnu@karchnu.fr>
