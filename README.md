@@ -11,7 +11,7 @@ Add this to your application's `shard.yml`:
 ``` yaml
 dependencies:
   pledge:
-    github: chris-huxtable/pledge.cr
+    github: kaneroot/pledge.cr
 ```
 
 ## Usage
@@ -51,7 +51,7 @@ and
 
 ## Contributing
 
-1. Fork it ( https://github.com/chris-huxtable/pledge.cr/fork )
+1. Fork it ( https://github.com/kaneroot/pledge.cr/fork )
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
@@ -59,4 +59,5 @@ and
 
 ## Contributors
 
-- [Chris Huxtable](https://github.com/chris-huxtable) - creator, maintainer
+- [Chris Huxtable](https://github.com/chris-huxtable) - creator
+- [KaneRoot](https://github.com/kaneroot) - maintainer
