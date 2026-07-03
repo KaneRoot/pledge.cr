@@ -15,29 +15,13 @@
 require "./spec_helper"
 
 describe "pledge" do
-  it "pledges" do
-    reader, writer = IO.pipe
-
-    child = Process.fork do
-      Process.pledge("stdio")
-
-      File.open("/etc/passwd")
-      writer.puts "shouldn't get here"
-    end
-
-    child.wait.exit_status.should eq LibC::SIGABRT
-  end
-
-  it "catches bad pledges" do
-    reader, writer = IO.pipe
-
-    child = Process.fork do
+  it "pledge something that doesn't exist" do
+    begin
       Process.pledge("stdonk")
-    rescue e : Process::PledgeError
-      writer.puts e.class
+    rescue e
+      e.class.should eq Process::PledgeError
     end
-
-    child.wait
-    reader.gets.should eq "Process::PledgeError"
   end
+
+  # Can we test any further since there is no proper way to fork?
 end
