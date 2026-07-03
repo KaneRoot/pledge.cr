@@ -12,6 +12,7 @@ Add this to your application's `shard.yml`:
 dependencies:
   pledge:
     github: kaneroot/pledge.cr
+    branch: main
 ```
 
 ## Usage
